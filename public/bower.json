@@ -1,0 +1,23 @@
+{
+  "name": "webcomponents",
+  "homepage": "https://github.com/serggiod/webcomponents",
+  "authors": [
+    "Orlando Sergio Dominguez <serggio@msn.com>"
+  ],
+  "description": "Web componets directory for  any purpose.",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.2.4",
+    "polymer-ajax": "*"
+  }
+}

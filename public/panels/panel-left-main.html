@@ -1,0 +1,69 @@
+<dom-module id="panel-left-main">
+
+	<link rel="import" href="/webcomponents/polymer/polymer.html">
+	
+	<template>
+			<style>
+				:host{
+					display:block;
+					position:absolute;
+					width:100%;
+					height:100%;
+					width:100%;
+					height:100%;
+					overflow:hidden;
+					background-color:#fff;
+				}
+				.panel-left{
+					display:block;
+					position:relative;
+					height:100%;
+					overflow:auto;
+				}
+				.panel-main{
+					display:block;
+					position:relative;
+					height:100%;
+					overflow:auto;
+				}
+
+			</style>
+
+			<!-- Barra de Navegacion -->
+			<nav id="panel-navbar" class="col s12 m12 l12 navbar-fixed z-depth-1 {{classnav}}">
+			<content select="[panel-navbar]"></content>
+			</nav>
+
+			<!-- Panel Left -->
+			<div id="panel-left" class="col s12 m4 l3 grey lighten-1 panel-left {{classleft}}">
+				<content select="[panel-left]"></content>
+			</div>
+
+			<!-- Panel Main -->
+			<div id="panel-main" class="col s12 m8 l9 grey lighten-2 panel-main {{classmain}}">
+
+				<content select="[panel-main]"></content>
+			</div> 
+    </template>
+
+    <script>
+    	Polymer({
+      		is:'panel-left-main',
+      		properties:{
+      			classnav:{
+      				type:String,
+      				value:'blue'
+      			},
+      			classleft:{
+      				type:String,
+      				value:'gray darken-1'
+      			},
+      			classmain:{
+      				type:String,
+      				value:'gray ligthen-1'
+      			}
+      		}
+    	});
+	</script>
+  
+</dom-module>

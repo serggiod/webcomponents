@@ -92,6 +92,9 @@
       		},
       		ready:function(){
       			$this=this;
+            if($this.innerWidth()<=600){
+              $this.$['panel-left'].style.display='none';
+            }
       			window.addEventListener('resize',function(){
       				$this.resizeHd();
       			});

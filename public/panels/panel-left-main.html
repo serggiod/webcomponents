@@ -1,68 +1,71 @@
 <!-- Requerimientos -->
-<link rel="import" href="/webcomponents/polymer/polymer.html">
+<link rel="import" href="/webcomponents/polymer/polymer.html"/>
 
 <!-- Modulo -->
 <dom-module id="panel-left-main">
 
-	<!-- Plantilla del objeto -->
+    <!-- Estilos -->
+    <style>
+        :host{
+            display:block;
+            position:absolute;
+            width:100%;
+            height:100%;
+            width:100%;
+            height:100%;
+            overflow:hidden;
+            background-color:#fff;
+        }
+        .panel-left{
+            position:relative;
+            height:100%;
+            overflow:auto;
+        }
+        .panel-main{
+            display:block;
+            position:relative;
+            height:100%;
+            overflow:auto;
+        }
+        .show{
+            display:block;
+        }
+        .hide{
+            display:hidden;
+        }
+
+    </style>
+    
+	<!-- Objeto -->
 	<template>
-			<style>
-				:host{
-					display:block;
-					position:absolute;
-					width:100%;
-					height:100%;
-					width:100%;
-					height:100%;
-					overflow:hidden;
-					background-color:#fff;
-				}
-				.panel-left{
-					position:relative;
-					height:100%;
-					overflow:auto;
-				}
-				.panel-main{
-					display:block;
-					position:relative;
-					height:100%;
-					overflow:auto;
-				}
-				.show{
-					display:block;
-				}
-				.hide{
-					display:hidden;
-				}
+        
+        <!-- Barra de Navegacion -->
+        <nav id="panel-navbar" class$="col s12 m12 l12 {{classnav}} navbar-fixed z-depth-1">
+            <ul class="left hide-on-med-and-up">
+                <li>
+                    <a class="waves-effect waves-light blue" on-click="menuHd">
+                        <i class="material-icons">
+                            menu
+                        </i>
+                    </a>                        
+                </li>
+            </ul>
+            <content select="[panel-navbar]"></content>
+        </nav>
 
-			</style>
+        <!-- Panel Left -->
+        <div id="panel-left" class$="col s12 m4 l3 {{classleft}} panel-left" on-click="panelleftHd">
+            <content select="[panel-left]"></content>
+        </div>
 
-			<!-- Barra de Navegacion -->
-			<nav id="panel-navbar" class$="col s12 m12 l12 {{classnav}} navbar-fixed z-depth-1">
-				<ul class="left hide-on-med-and-up">
-                    <li>
-                        <a class="waves-effect waves-light blue" on-click="menuHd">
-                            <i class="material-icons">
-                                menu
-                            </i>
-                        </a>                        
-                    </li>
-				</ul>
-				<content select="[panel-navbar]"></content>
-			</nav>
-
-			<!-- Panel Left -->
-			<div id="panel-left" class$="col s12 m4 l3 {{classleft}} panel-left" on-click="panelleftHd">
-				<content select="[panel-left]"></content>
-			</div>
-
-			<!-- Panel Main -->
-			<div id="panel-main" class$="col s12 m8 l9 {{classmain}} panel-main">
-				<content select="[panel-main]"></content>
-			</div> 
+        <!-- Panel Main -->
+        <div id="panel-main" class$="col s12 m8 l9 {{classmain}} panel-main">
+            <content select="[panel-main]"></content>
+        </div>
+        
     </template>
 
-    <!-- Definicion del Objetos -->
+    <!-- Definición -->
     <script>
     	Polymer({
       		is:'panel-left-main',

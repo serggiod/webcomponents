@@ -1,0 +1,59 @@
+<!-- Requerimientos -->
+<link rel="import" href="/webcomponents/polymer/polymer.html"/>
+
+<!-- Modulo -->
+<dom-module id="div-loading">
+
+    <!-- Objeto -->
+    <template>
+        
+        <!-- Estilos -->
+        <style>
+            :host{
+                position:fixed;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+                z-index:200;
+                background-color:#fff;
+                overflow:hidden;
+            }
+            .loadingbox{
+                width:260px;
+                height:130px;
+                text-align:center;
+                padding:20px;
+                overflow:hidden;
+                position:absolute;
+                top:0;
+                left:0;
+                bottom:0;
+                right:0;
+                margin:auto;
+            }
+            .loadingbox img{
+                width:80%;
+            }
+        </style>
+        
+        <div class="loadingbox">
+            <img src="/imgcdn/loading.gif"/>
+            <br/>
+            <span>{{text}}</span>
+        </div>
+    </template>
+    
+    <!-- Definición -->
+    <script>
+        Polymer({
+            is:'div-loading',
+            properties:{
+                text:{
+                    type:String,
+                    value:'Iniciando aplicación...'
+                }
+            }
+        });
+    </script>
+</dom-module>

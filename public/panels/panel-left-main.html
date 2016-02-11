@@ -94,7 +94,7 @@
       			return parseInt(window.innerWidth || window.mozInnerWidth || window.webkitInnerWidth || window.msInnerWidth);
       		},
       		ready:function(){
-      			$this=this;
+      			var $this=this;
             if($this.innerWidth()<=600){
               $this.$['panel-left'].style.display='none';
             }
@@ -103,7 +103,7 @@
       			});
       		},
       		resizeHd:function(){
-      			$this=this;
+      			var $this=this;
       			if($this.innerWidth()<=600){
       				$this.$['panel-left'].style.display = 'none';
       			} else {
@@ -111,11 +111,11 @@
       			}
       		},
       		menuHd:function(){
-      			$this=this;
+      			var $this=this;
       			$this.$['panel-left'].style.display = 'block';
       		},
       		panelleftHd:function(){
-      			$this=this;
+      			var $this=this;
       			if($this.innerWidth()<=600){
       				$this.$['panel-left'].style.display = 'none';		
       			}

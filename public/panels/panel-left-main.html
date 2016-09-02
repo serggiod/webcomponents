@@ -2,86 +2,84 @@
 <link rel="import" href="/webcomponents/polymer/polymer.html"/>
 
 <!-- Modulo -->
-<dom-module id="panel-left-main">
+<dom-module id="panel-left-main" properties="cssnav csssec cssleft cssmain">
 
     <!-- Estilos -->
     <style>
         :host{
-            display:block;
-            position:absolute;
-            width:100%;
-            height:100%;
-            width:100%;
-            height:100%;
+            position:fixed;
+            top     :0px;
+            left    :0px;
+            right   :0px;
+            bottom  :0px;
             overflow:hidden;
-            background-color:#fff;
         }
-        .panel-left{
-            position:relative;
-            height:100%;
-            overflow:auto;
-        }
-        .panel-main{
-            display:block;
-            position:relative;
-            height:100%;
-            overflow:auto;
-        }
-        .show{
-            display:block;
-        }
-        .hide{
-            display:hidden;
-        }
-
     </style>
     
 	<!-- Objeto -->
 	<template>
-        
-        <!-- Barra de Navegacion -->
-        <nav id="panel-navbar" class$="col s12 m12 l12 {{classnav}} navbar-fixed z-depth-1">
-            <ul class="left hide-on-med-and-up">
-                <li>
-                    <a class="waves-effect waves-light blue" on-click="menuHd">
-                        <i class="material-icons">
-                            menu
-                        </i>
-                    </a>                        
-                </li>
-            </ul>
-            <content select="[panel-navbar]"></content>
-        </nav>
 
-        <!-- Panel Left -->
-        <div id="panel-left" class$="col s12 m4 l3 {{classleft}} panel-left" on-click="panelleftHd">
-            <content select="[panel-left]"></content>
-        </div>
+        <!-- Fila 1 -->    
+        <div id="row1" class$="row {{cssnav}}">
 
-        <!-- Panel Main -->
-        <div id="panel-main" class$="col s12 m8 l9 {{classmain}} panel-main">
-            <content select="[panel-main]"></content>
+            <!-- Barra de Navegacion -->
+            <nav id="panel-navbar" class$="col s12 m12 l12 navbar-fixed z-depth-1 {{cssnav}}">
+                <div class="nav-wrapper">
+                    <ul class="left hide-on-large-only">
+                        <li>
+                            <a id="mainmenu" class$="waves-effect waves-light {{cssnav}} lighten-2">
+                                <i class="material-icons">
+                                    menu
+                                </i>
+                            </a>                        
+                        </li>
+                    </ul>
+                    <content select="[panel-navbar]"></content>
+                </div>
+            </nav>
+            <!-- / Barra de Navegación -->
+
+            <!-- Boton Flotante -->
+            <a id="toTop" class="hide-on-med-and-up fixed-action-btn btn btn-floating red darken-2 valign-wrapper" style="right:10px;bottom:10px;">
+                <i class="material-icons valign">
+                    navigation
+                </i>
+            </a>
+            <!-- /Boton Flotante -->
+
         </div>
-        
+        <!-- / Fila 1 -->
+
+        <!-- Fila 2 --> 
+        <div id="row2" class$="row {{csssec}}">
+
+            <!-- Panel Left --> 
+            <div id="panel-left" class$="col s12 l3 panel-left {{cssleft}}">
+                <content select="[panel-left]"></content>
+            </div>
+            <!-- /Panel Left -->
+
+            <!-- Panel Main -->
+            <div id="panel-main" class$="col s12 m12 l9 panel-main {{cssmain}}">
+                <content select="[panel-main]"></content>
+            </div>
+            <!-- /Panel Main -->
+
+        </div>
+        <!-- /Fila 2 -->
+
     </template>
 
     <!-- Definición -->
     <script>
+
     	Polymer({
+
+            // Id del Objeto.
       		is:'panel-left-main',
-      		properties:{
-      			classnav:{
-      				type:String,
-      				value:'blue'
-      			},
-      			classleft:{
-      				type:String,
-      				value:'grey darken-1'
-      			},
-      			classmain:{
-      				type:String,
-      				value:'grey ligthen-1'
-      			},
+
+            // Propiedades.
+            properties:{
       			toggle:{
       				type:String,
       				value:'show',
@@ -89,38 +87,127 @@
             		notify:true,
       			}
       		},
-
-      		innerWidth:function(){
-      			return parseInt(window.innerWidth || window.mozInnerWidth || window.webkitInnerWidth || window.msInnerWidth);
-      		},
+            
+            // Constructor.
       		ready:function(){
-      			var $this=this;
-            if($this.innerWidth()<=600){
-              $this.$['panel-left'].style.display='none';
-            }
-      			window.addEventListener('resize',function(){
-      				$this.resizeHd();
-      			});
-      		},
-      		resizeHd:function(){
-      			var $this=this;
-      			if($this.innerWidth()<=600){
-      				$this.$['panel-left'].style.display = 'none';
-      			} else {
-      				$this.$['panel-left'].style.display = 'block';
-      			}
-      		},
-      		menuHd:function(){
-      			var $this=this;
-      			$this.$['panel-left'].style.display = 'block';
-      		},
-      		panelleftHd:function(){
-      			var $this=this;
-      			if($this.innerWidth()<=600){
-      				$this.$['panel-left'].style.display = 'none';		
-      			}
-      		}    		
+                this.resize();
+                var $this = this;
+                window.addEventListener('resize',function(){ $this.resize(); });
+            },
+
+            // Listener de Eventos.
+            listeners:{
+                'mainmenu.click':'mainMenuClick',
+                'panel-left.click':'mainMenuClick',
+                'toTop.click':'toTopClick'
+            },
+
+            // Eventos.
+            iwidth:function(){ return parseInt(window.innerWidth || window.mozInnerWidth || window.webkitInnerWidth || window.msInnerWidth); },
+            iheight:function(){ return parseInt(window.innerHeight || window.mozInnerHeight || window.webkitInnerHeight || window.msInnerHeight); },
+
+            resize:function(){
+
+                if(this.iwidth()>=801){
+
+                    row2Wpl = '300px';
+                    row2Wpm = (this.iwidth -300).toString() +'px';
+
+                    this.style.display                  = 'block';
+                    this.style.overflow                 = 'scroll';
+
+                    this.$['row1'].style.display        = 'block';
+                    this.$['row1'].style.width          = 'auto';
+                    this.$['row1'].style.height         = 'auto';
+                    this.$['row1'].style.overflow       = 'visible';
+                    
+                    this.$['row2'].style.display        = 'block';
+                    this.$['row2'].style.width          = 'auto';
+                    this.$['row2'].style.height         = 'auto';
+                    this.$['row2'].style.overflow       = 'visible';
+                    
+                    this.$['panel-left'].style.position = 'static';
+                    this.$['panel-left'].style.top      = 'auto';
+                    this.$['panel-left'].style.left     = 'auto';
+                    this.$['panel-left'].style.display  = 'block';
+                    this.$['panel-left'].style.width    = row2pl;
+                    this.$['panel-left'].style.height   = 'auto';
+                    this.$['panel-left'].style.overflow = 'visible';
+                    this.$['panel-left'].style.zIndex   = 'auto';
+                    
+                    this.$['panel-main'].style.display  = 'block';
+                    this.$['panel-main'].style.width    = row2pm;
+
+                } 
+                else if(this.iwidth()>=601){
+
+                    secHeight = (this.iheight() - 60).toString() +'px';
+                    this.style.display                  = 'block';
+                    this.style.overflow                 = 'hidden';
+
+                    this.$['row1'].style.display        = 'block';
+                    this.$['row1'].style.width          = '100%';
+                    this.$['row1'].style.height         = '60px';
+                    this.$['row1'].style.overflow       = 'hidden';
+
+                    this.$['row2'].style.display        = 'block';
+                    this.$['row2'].style.width          = '100%';
+                    this.$['row2'].style.height         = secHeight;
+                    this.$['row2'].style.overflow       = 'scroll';
+
+                    this.$['panel-left'].style.position = 'fixed';
+                    this.$['panel-left'].style.top      = '60px';
+                    this.$['panel-left'].style.left     = '0px';
+                    this.$['panel-left'].style.display  = 'none';
+                    this.$['panel-left'].style.width    = '300px';
+                    this.$['panel-left'].style.height   = secHeight;
+                    this.$['panel-left'].style.overflow = 'scroll';
+                    this.$['panel-left'].style.zIndex   = '500';
+
+                    this.$['panel-main'].style.display  = 'block';
+                    this.$['panel-main'].style.width    = '100%';
+
+                }
+                else{
+
+                    secHeight = (this.iheight() - 60).toString() +'px';
+                    this.style.display                  = 'block';
+                    this.style.overflow                 = 'hidden';
+
+                    this.$['row1'].style.display        = 'block';
+                    this.$['row1'].style.width          = '100%';
+                    this.$['row1'].style.height         = '60px';
+                    this.$['row1'].style.oveflow        = 'hidden';
+
+                    this.$['row2'].style.display        = 'block';
+                    this.$['row2'].style.width          = '100%';
+                    this.$['row2'].style.height         = secHeight;
+                    this.$['row2'].style.overflow       = 'scroll';
+
+                    this.$['panel-left'].style.position = 'static';
+                    this.$['panel-left'].style.top      = 'auto';
+                    this.$['panel-left'].style.left     = 'auto';
+                    this.$['panel-left'].style.display  = 'none';
+                    this.$['panel-left'].style.width    = 'auto';
+                    this.$['panel-left'].style.height   = 'auto';
+                    this.$['panel-left'].style.overflow = 'visible';
+                    this.$['panel-left'].style.zIndex   = 'auto';
+
+                    this.$['panel-main'].style.display  = 'block';
+                    this.$['panel-main'].style.width    = '100%';
+                }
+            },
+            mainMenuClick:function(){
+                this.$['row2'].scrollTo(0,0);
+                if(this.$['panel-left'].style.display==='none')  this.$['panel-left'].style.display = 'block';
+                else this.$['panel-left'].style.display = 'none';
+            },
+            toTopClick:function(){
+                this.$['row2'].scrollTo(0,0);
+            }  		
     	});
+
+
 
 	</script>
   

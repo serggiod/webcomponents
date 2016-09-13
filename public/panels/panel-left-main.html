@@ -39,14 +39,6 @@
             </nav>
             <!-- / Barra de Navegación -->
 
-            <!-- Boton Flotante -->
-            <a id="toTop" class="hide-on-med-and-up fixed-action-btn btn btn-floating red darken-2 valign-wrapper" style="right:10px;bottom:10px;">
-                <i class="material-icons valign">
-                    navigation
-                </i>
-            </a>
-            <!-- /Boton Flotante -->
-
         </div>
         <!-- / Fila 1 -->
 
@@ -80,26 +72,19 @@
 
             // Propiedades.
             properties:{
-      			toggle:{
-      				type:String,
-      				value:'show',
-      				reflectToAttribute:true,
-            		notify:true,
-      			}
       		},
             
             // Constructor.
       		ready:function(){
-                this.resize();
                 var $this = this;
-                window.addEventListener('resize',function(){ $this.resize(); });
+                $this.resize();
+                window.addEventListener('resize',function(){ $this.resize(); console.log('Resize'); });
             },
 
             // Listener de Eventos.
             listeners:{
                 'mainmenu.click':'mainMenuClick',
-                'panel-left.click':'mainMenuClick',
-                'toTop.click':'toTopClick'
+                'panel-left.click':'mainMenuClick'
             },
 
             // Eventos.
@@ -111,7 +96,7 @@
                 if(this.iwidth()>=801){
 
                     row2Wpl = '300px';
-                    row2Wpm = (this.iwidth -300).toString() +'px';
+                    row2Wpm = (this.iwidth -302).toString() +'px';
 
                     this.style.display                  = 'block';
                     this.style.overflow                 = 'scroll';
@@ -140,6 +125,9 @@
 
                 } 
                 else if(this.iwidth()>=601){
+
+                    row2Wpl = '300px';
+                    row2Wpm = (this.iwidth -302).toString() +'px';
 
                     secHeight = (this.iheight() - 60).toString() +'px';
                     this.style.display                  = 'block';
@@ -199,12 +187,15 @@
             },
             mainMenuClick:function(){
                 this.$['row2'].scrollTo(0,0);
-                if(this.$['panel-left'].style.display==='none')  this.$['panel-left'].style.display = 'block';
-                else this.$['panel-left'].style.display = 'none';
-            },
-            toTopClick:function(){
-                this.$['row2'].scrollTo(0,0);
-            }  		
+
+                if(this.$['panel-left'].style.display=='none'){
+                    this.$['panel-left'].style.display = 'block';
+                }
+
+                else{
+                     this.$['panel-left'].style.display = 'none';
+                }
+            } 		
     	});
 
 
